@@ -1,0 +1,11 @@
+{
+
+"Labben":{
+	"Admin":[ 
+    {"Name":"Helse","OU":"ou=Helse,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"},
+    {"Name":"Laptop","OU":"ou=Laptop,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"},
+    {"Name":"Desktop","OU":"ou=Desktop,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"}
+    ]
+}
+
+}  

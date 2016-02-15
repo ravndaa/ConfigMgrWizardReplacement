@@ -1,0 +1,1 @@
+mshta.exe "%~dp0FrontEnd.hta"

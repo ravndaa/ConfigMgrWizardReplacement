@@ -1,0 +1,185 @@
+<html ng-app="app" id="ng-app">
+<head>
+<meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=8" />
+  <title>DeployApp</title>
+ <HTA:APPLICATION 
+    APPLICATIONNAME="DeployApp"
+    SCROLL="yes"
+    SINGLEINSTANCE="yes" border="none" borderStyle="normal"  innerBorder="no" CAPTION="no" />
+  <style>
+    table, td, th { border: 1px solid black; }
+  </style>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+<SCRIPT LANGUAGE="VBScript">
+Sub Window_Onload
+   ' Set oTSProgressUI = CreateObject("Microsoft.SMS.TSProgressUI") 
+   ' oTSProgressUI.CloseProgressDialog 
+   ' Set oTSProgressUI = Nothing
+End Sub
+ 
+Sub TestSub()
+    Set oTaskSequence = CreateObject("Microsoft.SMS.TSEnvironment") 
+    oTaskSequence("OSDComputerName") = OSDComputerName.Value
+    oTaskSequence("OSDOuPath") = OUpath.Value
+    oTaskSequence("OSDOSVersion") = OSDOSVersion.Value
+    oTaskSequence("OSDComputerDepartment") = OSDComputerDepartment.Value
+    oTaskSequence("SMSTSPreferredAdvertID") = "P0020005"
+    oTaskSequence("OSDOrgType") = OSDOrgType.Value
+
+   // MsgBox(OUpath.Value)
+   // MsgBox(OSDComputerDepartment.Value)
+   // MsgBox(OSDOSVersion.Value)
+   // MsgBox(OSDComputerName.Value)
+   // MsgBox(OSDOrgType.Value)
+   Self.Close
+End Sub
+
+</SCRIPT>
+
+
+
+<script type="text/javascript" src="Scripts/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="Scripts/angular.min.js"></script>
+<script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+window.resizeTo(650,490);
+window.moveTo(screen.width/2-300,screen.height/2-250)
+
+  var module = angular.module('app', []);
+  module.controller('ctrl', ['$scope','$http', function($scope, $http) {
+    
+$http({
+              method: 'GET',
+              url: "http://sccm1511:8080/test.json",
+              headers: {
+                  'Content-Type': "application/json"
+              }
+          })
+              .then(function successCallback(response) {
+                $scope.Fruits = response.data;
+              },
+              function errorCallback(response) {
+                  window.alert(response.data);
+              }
+          );
+
+
+$scope.change = function() {
+        $scope.type = "";
+        $scope.maskin = "";
+        $scope.maskin.disabled = true;
+        $scope.OSDOSVersion = "";
+        $scope.OSDOrgType = "";
+        
+      };
+
+$scope.showSelectValue = function() {
+    //alert($('#type').find(":selected").text() );
+    $scope.OSDOrgType = $('#type').find(":selected").text();
+}
+
+
+  }]);
+	
+	
+
+</script>
+</head>
+<body ng-controller="ctrl" style="background-color: #FFFFFF">
+
+   
+<div class="container-fluid" style="">
+    
+    <br>
+    
+    <div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Computer Name:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" style="width:300px" name="OSDComputerName" id="OSDComputerName" ng-model="OSDComputerName">
+        </div>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Kommune:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="kommune" ng-change="change()" ng-model="typer" ng-options="kommune for (kommune, typer) in Fruits">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Type:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="type" ng-disabled="!typer" ng-model="type" ng-change="showSelectValue()" ng-options="type for (type, avd) in typer">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Enhet:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="avd" name="avd" ng-disabled="!type" ng-model="maskin" ng-options="maskin.Name for (avd, maskin) in type">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Operating System:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="OSDOSVersion" name="OSDOSVersion" ng-disabled="!maskin" ng-model="OSDOSVersion">
+                <option value=''>Select</option>
+                <option value='Windows10Education'>Windows 10 Education</option>
+                <option value='Windows10Enterprise'>Windows 10 Enterprise</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+   <div class="row" ><div class="col-md-3"></div></div>
+
+    <div class="row" >
+        <div class="col-md-3">
+<pre>
+    <b>OUpath</b> = {{maskin.OU}}
+    <b>OSDComputerDepartment</b> = {{maskin.Name}}
+    <b>OSDOSVersion</b> = {{OSDOSVersion}}
+    <b>OSDComputerName</b> = {{OSDComputerName}}
+    <b>OSDOrgType</b> = {{OSDOrgType}}
+</pre>
+</div>
+</div>
+
+<input id="OUPath" name="OUPath" value="{{maskin.OU}}" hidden>
+<input id="OSDComputerDepartment" name="OSDComputerDepartment" value="{{maskin.Name}}" hidden>
+<input id="OSDOrgType" name="OSDOrgType" value="{{OSDOrgType}}" hidden>
+
+
+
+<div class="row" >
+ 
+    <div class="col-md-3">
+        <input id=runbutton class="btn btn-success" type="button" value="Start Deploy" name="run_button"  onClick="TestSub()">
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

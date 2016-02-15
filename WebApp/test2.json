@@ -1,0 +1,38 @@
+{
+    "Labben": {
+        "Admin": {
+            "TS": "PS0020005",
+            "OU": {
+                "Admin1": {
+                    "Name": "Helse",
+                    "OU": "ou=Helse,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"
+                },
+                "Admin2": {
+                    "Name": "Laptop",
+                    "OU": "ou=Laptop,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"
+                },
+                "Admin3": {
+                    "Name": "Desktop",
+                    "OU": "ou=Desktop,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"
+                }
+            }
+        },
+        "Helse": {
+            "TS": "PS0020005",
+            "OU": {
+                "Helse": {
+                    "Name": "Helse",
+                    "OU": "ou=Helse,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"
+                },
+                "Helse2": {
+                    "Name": "Laptop",
+                    "OU": "ou=Laptop,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"
+                },
+                "Helse3": {
+                    "Name": "Desktop",
+                    "OU": "ou=Desktop,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re"
+                }
+            }
+        }
+    }
+}

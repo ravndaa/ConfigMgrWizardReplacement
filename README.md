@@ -6,6 +6,9 @@ With this we can replace the Wizard when starting a Task Sequence from PXE.
 It works by placing a JSON file at a web server that an HTA is reading.
 <br>
 This will set an override TS advertisement id so that the default Wizard is skipped.
+<br>
+
+Simple video of how it looks like -> https://youtu.be/EXNGwAAhNiY
 
 ## Install
 

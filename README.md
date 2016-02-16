@@ -10,7 +10,7 @@ This will set an override TS advertisement id so that the default Wizard is skip
 
 Simple video of how it looks like -> https://youtu.be/EXNGwAAhNiY
 
-## Install
+## "WebService"
 
 1. Create a simple web app in IIS.
 2. Copy the content from WebApp to this folder.

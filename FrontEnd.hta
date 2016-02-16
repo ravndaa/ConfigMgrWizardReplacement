@@ -14,26 +14,25 @@
 
 
 <SCRIPT LANGUAGE="VBScript">
-Sub Window_Onload
-   ' Set oTSProgressUI = CreateObject("Microsoft.SMS.TSProgressUI") 
-   ' oTSProgressUI.CloseProgressDialog 
-   ' Set oTSProgressUI = Nothing
-End Sub
+
  
 Sub TestSub()
-    Set oTaskSequence = CreateObject("Microsoft.SMS.TSEnvironment") 
-    oTaskSequence("OSDComputerName") = OSDComputerName.Value
-    oTaskSequence("OSDOuPath") = OUpath.Value
-    oTaskSequence("OSDOSVersion") = OSDOSVersion.Value
-    oTaskSequence("OSDComputerDepartment") = OSDComputerDepartment.Value
-    oTaskSequence("SMSTSPreferredAdvertID") = "P0020005"
-    oTaskSequence("OSDOrgType") = OSDOrgType.Value
 
-   // MsgBox(OUpath.Value)
-   // MsgBox(OSDComputerDepartment.Value)
-   // MsgBox(OSDOSVersion.Value)
-   // MsgBox(OSDComputerName.Value)
-   // MsgBox(OSDOrgType.Value)
+    'Set oTaskSequence = CreateObject("Microsoft.SMS.TSEnvironment") 
+    'oTaskSequence("OSDComputerName") = OSDComputerName.Value
+    'oTaskSequence("OSDOuPath") = OUpath.Value
+    'oTaskSequence("OSDOSVersion") = OSDOSVersion.Value
+    'oTaskSequence("OSDComputerUnit") = OSDComputerDepartment.Value
+    'oTaskSequence("SMSTSPreferredAdvertID") = "P0020005"
+    'oTaskSequence("OSDOrgType") = OSDOrgType.Value
+	   
+       MsgBox(OSDComputerName.Value)
+       MsgBox(OUpath.Value)
+       MsgBox(OSDOSVersion.Value)
+       MsgBox(OSDtsId.Value)
+       MsgBox(OSDlocation.Value)
+       MsgBox(OSDUnit.Value)
+        
    Self.Close
 End Sub
 
@@ -53,15 +52,18 @@ window.moveTo(screen.width/2-300,screen.height/2-250)
   var module = angular.module('app', []);
   module.controller('ctrl', ['$scope','$http', function($scope, $http) {
     
+    
+
+    
 $http({
               method: 'GET',
-              url: "http://sccm1511:8080/test.json",
+              url: "http://192.168.184.135:8080/test2.json",
               headers: {
                   'Content-Type': "application/json"
               }
           })
               .then(function successCallback(response) {
-                $scope.Fruits = response.data;
+                $scope.jsonData = response.data;
               },
               function errorCallback(response) {
                   window.alert(response.data);
@@ -69,14 +71,40 @@ $http({
           );
 
 
-$scope.change = function() {
+    $scope.change = function() {
         $scope.type = "";
-        $scope.maskin = "";
-        $scope.maskin.disabled = true;
+        $scope.enhet = "";
+        //$scope.avd.disabled = true;
         $scope.OSDOSVersion = "";
         $scope.OSDOrgType = "";
         
-      };
+        
+    };
+      
+    $scope.changeSetTsIdCountry = function()
+    {
+        if( $scope.locations.TS.lengt != 0 )
+        {
+            $scope.tsId = $scope.locations.TS;
+        }  
+    };
+
+    $scope.changeSetTsIdLocation = function()
+    {
+            if( $scope.location.TS.length != 0 )
+            {
+                $scope.tsId = $scope.location.TS;
+            }
+    };
+    
+    $scope.changeSetTsIdUnit = function()
+    {
+            if($scope.unit.TS.length != 0)
+            {
+                $scope.tsId = $scope.unit.TS;
+            }
+    };
+
 
 $scope.showSelectValue = function() {
     //alert($('#type').find(":selected").text() );
@@ -99,7 +127,7 @@ $scope.showSelectValue = function() {
     
     <div class="row">
     <div class="col-md-6">
-        <label for="basic-url">Computer Name:</label>
+        <label for="basic-url">ComputerName:</label>
         <div class="input-group">
             <input type="text" class="form-control" style="width:300px" name="OSDComputerName" id="OSDComputerName" ng-model="OSDComputerName">
         </div>
@@ -108,9 +136,9 @@ $scope.showSelectValue = function() {
     
 <div class="row">
     <div class="col-md-6">
-        <label for="basic-url">Kommune:</label>
+        <label for="basic-url">Country:</label>
         <div class="input-group">
-            <select class="form-control" style="width:300px" id="kommune" ng-change="change()" ng-model="typer" ng-options="kommune for (kommune, typer) in Fruits">
+            <select class="form-control" style="width:300px" id="country" ng-change="changeSetTsIdCountry();" ng-model="locations" ng-options="country for (country, locations) in jsonData">
                 <option value=''>Select</option>
             </select>
         </div>
@@ -119,9 +147,9 @@ $scope.showSelectValue = function() {
 
 <div class="row">
     <div class="col-md-6">
-        <label for="basic-url">Type:</label>
+        <label for="basic-url">Location:</label>
         <div class="input-group">
-            <select class="form-control" style="width:300px" id="type" ng-disabled="!typer" ng-model="type" ng-change="showSelectValue()" ng-options="type for (type, avd) in typer">
+            <select class="form-control" style="width:300px" id="location" ng-disabled="!locations" ng-change="changeSetTsIdLocation();" ng-model="location" ng-options="Name for (Name,location) in locations.Locations">
                 <option value=''>Select</option>
             </select>
         </div>
@@ -130,9 +158,9 @@ $scope.showSelectValue = function() {
 
 <div class="row">
     <div class="col-md-6">
-        <label for="basic-url">Enhet:</label>
+        <label for="basic-url">Unit:</label>
         <div class="input-group">
-            <select class="form-control" style="width:300px" id="avd" name="avd" ng-disabled="!type" ng-model="maskin" ng-options="maskin.Name for (avd, maskin) in type">
+            <select class="form-control" style="width:300px" id="unit" name="unit" ng-disabled="!location" ng-change="changeSetTsIdUnit();" ng-model="unit" ng-options="unit for (unit, avd) in location.OU">
                 <option value=''>Select</option>
             </select>
         </div>
@@ -143,7 +171,7 @@ $scope.showSelectValue = function() {
     <div class="col-md-6">
         <label for="basic-url">Operating System:</label>
         <div class="input-group">
-            <select class="form-control" style="width:300px" id="OSDOSVersion" name="OSDOSVersion" ng-disabled="!maskin" ng-model="OSDOSVersion">
+            <select class="form-control" style="width:300px" id="OSDOSVersion" name="OSDOSVersion" ng-disabled="!unit" ng-model="OSDOSVersion">
                 <option value=''>Select</option>
                 <option value='Windows10Education'>Windows 10 Education</option>
                 <option value='Windows10Enterprise'>Windows 10 Enterprise</option>
@@ -157,18 +185,22 @@ $scope.showSelectValue = function() {
     <div class="row" >
         <div class="col-md-3">
 <pre>
-    <b>OUpath</b> = {{maskin.OU}}
-    <b>OSDComputerDepartment</b> = {{maskin.Name}}
+    <b>OUpath</b> = {{unit.OU}}
+    <b>Unit</b> = {{unit.Name}}
     <b>OSDOSVersion</b> = {{OSDOSVersion}}
     <b>OSDComputerName</b> = {{OSDComputerName}}
-    <b>OSDOrgType</b> = {{OSDOrgType}}
+    <b>Location</b> = {{location.Name}}
+    <b>tsId</b> = {{tsId}}
+
+
 </pre>
 </div>
 </div>
 
-<input id="OUPath" name="OUPath" value="{{maskin.OU}}" hidden>
-<input id="OSDComputerDepartment" name="OSDComputerDepartment" value="{{maskin.Name}}" hidden>
-<input id="OSDOrgType" name="OSDOrgType" value="{{OSDOrgType}}" hidden>
+<input id="OUPath" name="OUPath" value="{{unit.OU}}" hidden>
+<input id="Location" name="OSDlocation" value="{{location.Name}}" hidden>
+<input id="Unit" name="OSDunit" value="{{unit.Name}}" hidden>
+<input id="tsId" name="OSDtsId" value="{{tsId}}" hidden>
 
 
 

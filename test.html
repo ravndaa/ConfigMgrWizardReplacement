@@ -1,0 +1,190 @@
+<html ng-app="app" id="ng-app">
+<head>
+<meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=8" />
+  <title>DeployApp</title>
+ <HTA:APPLICATION 
+    APPLICATIONNAME="DeployApp"
+    SCROLL="yes"
+    SINGLEINSTANCE="yes" border="none" borderStyle="normal"  innerBorder="no" CAPTION="no" />
+  <style>
+    table, td, th { border: 1px solid black; }
+  </style>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+<script type="text/javascript" src="Scripts/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="Scripts/angular.min.js"></script>
+<script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+window.resizeTo(650,490);
+window.moveTo(screen.width/2-300,screen.height/2-250)
+
+  var module = angular.module('app', []);
+  module.controller('ctrl', ['$scope','$http', function($scope, $http) {
+    
+    
+
+    
+$http({
+              method: 'GET',
+              url: "http://192.168.184.135:8080/test2.json",
+              headers: {
+                  'Content-Type': "application/json"
+              }
+          })
+              .then(function successCallback(response) {
+                $scope.jsonData = response.data;
+              },
+              function errorCallback(response) {
+                  window.alert(response.data);
+              }
+          );
+
+
+    $scope.change = function() {
+        $scope.type = "";
+        $scope.enhet = "";
+        //$scope.avd.disabled = true;
+        $scope.OSDOSVersion = "";
+        $scope.OSDOrgType = "";
+        
+        
+    };
+      
+    $scope.changeSetTsIdCountry = function()
+    {
+        if( $scope.locations.TS.lengt != 0 )
+        {
+            $scope.tsId = $scope.locations.TS;
+        }  
+    };
+
+    $scope.changeSetTsIdLocation = function()
+    {
+            if( $scope.location.TS.length != 0 )
+            {
+                $scope.tsId = $scope.location.TS;
+            }
+    };
+    
+    $scope.changeSetTsIdUnit = function()
+    {
+            if($scope.unit.TS.length != 0)
+            {
+                $scope.tsId = $scope.unit.TS;
+            }
+    };
+
+
+$scope.showSelectValue = function() {
+    //alert($('#type').find(":selected").text() );
+    $scope.OSDOrgType = $('#type').find(":selected").text();
+}
+
+
+  }]);
+	
+	
+
+</script>
+</head>
+<body ng-controller="ctrl" style="background-color: #FFFFFF">
+
+   
+<div class="container-fluid" style="">
+    
+    <br>
+    
+    <div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">ComputerName:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" style="width:300px" name="OSDComputerName" id="OSDComputerName" ng-model="OSDComputerName">
+        </div>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Country:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="country" ng-change="changeSetTsIdCountry();" ng-model="locations" ng-options="country for (country, locations) in jsonData">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Location:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="location" ng-disabled="!locations" ng-change="changeSetTsIdLocation();" ng-model="location" ng-options="Name for (Name,location) in locations.Locations">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Unit:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="unit" name="unit" ng-disabled="!location" ng-change="changeSetTsIdUnit();" ng-model="unit" ng-options="unit for (unit, avd) in location.OU">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="basic-url">Operating System:</label>
+        <div class="input-group">
+            <select class="form-control" style="width:300px" id="OSDOSVersion" name="OSDOSVersion" ng-disabled="!unit" ng-model="OSDOSVersion">
+                <option value=''>Select</option>
+                <option value='Windows10Education'>Windows 10 Education</option>
+                <option value='Windows10Enterprise'>Windows 10 Enterprise</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+   <div class="row" ><div class="col-md-3"></div></div>
+
+    <div class="row" >
+        <div class="col-md-3">
+<pre>
+    <b>OUpath</b> = {{unit.OU}}
+    <b>Unit</b> = {{unit.Name}}
+    <b>OSDOSVersion</b> = {{OSDOSVersion}}
+    <b>OSDComputerName</b> = {{OSDComputerName}}
+    <b>Location</b> = {{location.Name}}
+    <b>tsId</b> = {{tsId}}
+
+
+</pre>
+</div>
+</div>
+
+<input id="OUPath" name="OUPath" value="{{unit.OU}}" hidden>
+<input id="Location" name="OSDlocation" value="{{location.Name}}" hidden>
+<input id="Unit" name="OSDunit" value="{{unit.Name}}" hidden>
+<input id="tsId" name="OSDtsId" value="{{tsId}}" hidden>
+
+
+
+<div class="row" >
+ 
+    <div class="col-md-3">
+        <input id=runbutton class="btn btn-success" type="button" value="Start Deploy" name="run_button"  onClick="TestSub()">
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

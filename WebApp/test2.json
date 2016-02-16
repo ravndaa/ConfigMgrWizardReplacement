@@ -45,5 +45,52 @@
                 }
             }
         }
+    },
+"Country2": {
+        "TS": "PS0011111",
+        "Locations": {
+            "Location": {
+                "TS": "",
+                "Name": "Location",
+                "OU": {
+                    "OUNAME": {
+                        "Name": "OUNAME",
+                        "OU": "ou=OUNAME,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re",
+                        "TS": ""
+                    },
+                    "OUNAME2": {
+                        "Name": "OUNAME2",
+                        "OU": "ou=OUNAME2,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re",
+                        "TS": ""
+                    },
+                    "OUNAME3": {
+                        "Name": "OUNAME3",
+                        "OU": "ou=OUNAME3,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re",
+                        "TS": ""
+                    }
+                }
+            },
+            "Location1": {
+                "TS": "",
+                "Name": "Location1",
+                "OU": {
+                    "OUNAME1": {
+                        "Name": "OUNAME1",
+                        "OU": "ou=OUNAME1,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re",
+                        "TS": ""
+                    },
+                    "OUNAME2": {
+                        "Name": "OUNAME2",
+                        "OU": "ou=OUNAME2,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re",
+                        "TS": ""
+                    },
+                    "OUNAME3": {
+                        "Name": "OUNAME3",
+                        "OU": "ou=OUNAME3,ou=Computers,ou=ORG,dc=lab,dc=config,dc=re",
+                        "TS": ""
+                    }
+                }
+            }
+        }
     }
 }

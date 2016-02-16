@@ -11,3 +11,9 @@ This will set an override TS advertisement id so that the default Wizard is skip
 
 1. Create a simple web app in IIS.
 2. Copy the content from WebApp to this folder.
+3. Change variable jsonUrl in FrontEnd.hta
+
+### Bootimage
+3. Prestart commnad: mshta.exe "x:\sms\pkg\SMS10000\FrontEnd.hta"
+4. Source Directory, point to the folder with "FrontEnd.hta",css,fonts and scripts.
+5. Remember to add Winpe-HTA

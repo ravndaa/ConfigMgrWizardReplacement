@@ -18,20 +18,20 @@
  
 Sub TestSub()
 
-    'Set oTaskSequence = CreateObject("Microsoft.SMS.TSEnvironment") 
-    'oTaskSequence("OSDComputerName") = OSDComputerName.Value
-    'oTaskSequence("OSDOuPath") = OUpath.Value
-    'oTaskSequence("OSDOSVersion") = OSDOSVersion.Value
-    'oTaskSequence("OSDComputerUnit") = OSDComputerDepartment.Value
-    'oTaskSequence("SMSTSPreferredAdvertID") = "P0020005"
-    'oTaskSequence("OSDOrgType") = OSDOrgType.Value
+    Set oTaskSequence = CreateObject("Microsoft.SMS.TSEnvironment") 
+    oTaskSequence("OSDComputerName") = OSDComputerName.Value
+    oTaskSequence("OSDOuPath") = OUpath.Value
+    oTaskSequence("OSDOSVersion") = OSDOSVersion.Value
+    oTaskSequence("OSDUnit") = OSDUnit.Value
+    oTaskSequence("SMSTSPreferredAdvertID") = OSDtsId.Value
+    oTaskSequence("OSDLocation") = OSDlocation.Value
 	   
-       MsgBox(OSDComputerName.Value)
-       MsgBox(OUpath.Value)
-       MsgBox(OSDOSVersion.Value)
-       MsgBox(OSDtsId.Value)
-       MsgBox(OSDlocation.Value)
-       MsgBox(OSDUnit.Value)
+       'MsgBox(OSDComputerName.Value)
+       'MsgBox(OUpath.Value)
+       'MsgBox(OSDOSVersion.Value)
+       'MsgBox(OSDtsId.Value)
+       'MsgBox(OSDlocation.Value)
+       'MsgBox(OSDUnit.Value)
         
    Self.Close
 End Sub
